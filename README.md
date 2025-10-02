@@ -1,2 +1,2 @@
 # ProyectoArritmiaUAO
-Este Prooyecto es para el curso de Inteligencia Artificial
+Este Proyecto es para el curso de Inteligencia Artificial

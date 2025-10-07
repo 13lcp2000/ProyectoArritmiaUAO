@@ -13,9 +13,15 @@ st.write("Sube un archivo CSV sin encabezados (188 columnas numéricas) para gen
 # ---- Cargar modelo ----
 @st.cache_resource
 def cargar_modelo():
-    ruta_modelo = r"C:\L48\proyecto-arritmias\proyArritmiEsencial\PrediccionArritmia.keras"
+    # RUTA CORREGIDA: Apunta directamente a la carpeta src/modelo/ desde la raíz del proyecto.
+    ruta_modelo = os.path.join("src", "modelo", "PrediccionArritmia.keras")
+    
+    # Si la ruta anterior no funciona, intenta esta ruta absoluta (para entornos complejos)
+    # base_path = os.path.dirname(os.path.abspath(__file__))
+    # ruta_modelo = os.path.join(base_path, "modelo", "PrediccionArritmia.keras")
+    
     if not os.path.exists(ruta_modelo):
-        st.error(f"❌ No se encontró el modelo en: {ruta_modelo}")
+        st.error(f"❌ No se encontró el modelo. Se buscó en: {ruta_modelo}")
         return None
     try:
         modelo = keras.models.load_model(ruta_modelo)
@@ -40,11 +46,12 @@ if archivo is not None:
         if df.shape[1] != 188:
             st.warning(f"⚠️ El archivo tiene {df.shape[1]} columnas, pero el modelo espera 188.")
         else:
-            X = df.values.astype(np.float32)
+            # Asegurar que los datos sean float32 para el modelo de Keras
+            X = df.values.astype(np.float32) 
 
             if modelo is not None:
                 # Realizar predicciones
-                predicciones = modelo.predict(X)
+                predicciones = modelo.predict(X) 
                 st.success("✅ Predicción completada con éxito.")
 
                 # Mostrar tabla de probabilidades

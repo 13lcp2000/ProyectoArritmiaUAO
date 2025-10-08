@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from tensorflow import keras
+import mlflow.keras
 import os
 
 st.set_page_config(page_title="Predicción de Episodios de Arritmia Cardíaca", layout="centered")
@@ -10,19 +10,23 @@ st.set_page_config(page_title="Predicción de Episodios de Arritmia Cardíaca", 
 st.title("🫀 Predicción de Episodios de Arritmia Cardíaca")
 st.write("Sube un archivo CSV sin encabezados (188 columnas numéricas) para generar una predicción.")
 
-# ---- Cargar modelo ----
+# ---- Cargar modelo (versión MLflow) ----
 @st.cache_resource
 def cargar_modelo():
-    ruta_modelo = r"C:\L48\proyecto-arritmias\proyArritmiEsencial\PrediccionArritmia.keras"
-    if not os.path.exists(ruta_modelo):
-        st.error(f"❌ No se encontró el modelo en: {ruta_modelo}")
+    ruta_modelo_mlflow = os.path.join("src", "modelo_mlflow")
+
+    if not os.path.exists(ruta_modelo_mlflow):
+        st.error(f"❌ No se encontró el modelo MLflow. Se buscó en: {ruta_modelo_mlflow}")
         return None
+
     try:
-        modelo = keras.models.load_model(ruta_modelo)
+        modelo = mlflow.keras.load_model(ruta_modelo_mlflow)
+        st.success("✅ Modelo MLflow cargado correctamente.")
         return modelo
     except Exception as e:
-        st.error(f"Error al cargar el modelo: {e}")
+        st.error(f"❌ Error al cargar el modelo MLflow: {e}")
         return None
+
 
 modelo = cargar_modelo()
 
@@ -63,13 +67,12 @@ if archivo is not None:
                     4: "Otras arritmias"
                 }
 
-                # Convertir índices en nombres
-                nombres_clases = [etiquetas[i] for i in clases_predichas]
+                nombres_clases = [etiquetas.get(i, "Desconocida") for i in clases_predichas]
 
                 # Mostrar resultados
                 st.subheader("🏷️ Diagnóstico Predicho por Muestra")
                 resultados_df = pd.DataFrame({
-                    "Muestra": range(1, len(clases_predichas)+1),
+                    "Muestra": range(1, len(clases_predichas) + 1),
                     "Clase (Índice)": clases_predichas,
                     "Diagnóstico": nombres_clases
                 })
@@ -83,7 +86,6 @@ if archivo is not None:
                     file_name="resultados_prediccion.csv",
                     mime="text/csv"
                 )
-
             else:
                 st.error("El modelo no está cargado correctamente. Revisa la ruta o el formato.")
     except Exception as e:

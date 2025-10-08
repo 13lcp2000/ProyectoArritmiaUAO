@@ -1,0 +1,23 @@
+# Ignorar carpetas y archivos específicos de entornos locales
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos de Jupyter/logs
+.ipynb_checkpoints
+.DS_Store
+
+# Datos sensibles o grandes (si hubiera)
+data/
+logs/
+
+# Ignorar modelos Keras originales (pesados o no necesarios para el contenedor)
+src/modelo/
+
+# NO ignorar la nueva carpeta MLflow (debe incluirse en la imagen)
+!src/modelo_mlflow/
+
+# Ignorar el propio Dockerfile y el .dockerignore
+Dockerfile
+.dockerignore

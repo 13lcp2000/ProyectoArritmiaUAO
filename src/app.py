@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from modelo.cargar_modelo import cargar_modelo_mlflow
-from modelo.prediccion import generar_predicciones
+from cargar_modelo import cargar_modelo_mlflow
+from prediccion import generar_predicciones
 from utils import validar_columnas
 from ui import mostrar_resultados
 

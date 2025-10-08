@@ -47,14 +47,6 @@ Abre tu navegador y dirígete a:
 La aplicación se cargará lista para recibir un archivo CSV sin encabezados (188 columnas numéricas)
 y generar la predicción en tiempo real.
 
-📂 Estructura del proyecto
-Archivo / Carpeta	Propósito	Descripción
-Dockerfile	Definición del entorno	Usa python:3.11-slim, instala dependencias con uv, y copia el modelo MLflow a /app/src/modelo_mlflow/.
-requirements.txt	Dependencias	Lista las librerías necesarias: Streamlit, TensorFlow, pandas, MLflow, etc.
-src/app.py	Aplicación principal	Interfaz Streamlit para carga de archivos, predicción y visualización de resultados. Carga el modelo desde src/modelo_mlflow/.
-src/modelo_mlflow/	Modelo MLflow	Carpeta con el modelo empaquetado (archivos MLmodel, conda.yaml, etc.).
-.dockerignore	Exclusiones	Evita incluir el modelo Keras original, __pycache__, entornos virtuales, logs, etc.
-
  Modelo en formato MLflow
 El modelo fue convertido desde un archivo Keras (PrediccionArritmia.keras) a formato MLflow, utilizando el script:
 

@@ -12,6 +12,12 @@ __pycache__/
 data/
 logs/
 
+# Ignorar modelos Keras originales (pesados o no necesarios para el contenedor)
+src/modelo/
+
+# NO ignorar la nueva carpeta MLflow (debe incluirse en la imagen)
+!src/modelo_mlflow/
+
 # Ignorar el propio Dockerfile y el .dockerignore
 Dockerfile
 .dockerignore

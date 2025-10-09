@@ -1,68 +1,47 @@
-# Predicción de Episodios de Arritmia Cardíaca  
-**Proyecto Arritmia UAO**
+🫀 Predicción de Episodios de Arritmia Cardíaca
+Proyecto Arritmia UAO
+✨ Introducción y Arquitectura
+Este proyecto contiene una aplicación desarrollada en Streamlit para la clasificación y predicción de arritmias cardíacas.
 
----
+El modelo de predicción fue estandarizado utilizando MLflow para asegurar:
 
-## ✨ Introducción
+Portabilidad: El modelo se carga en un formato universal (src/modelo_mlflow/).
 
-Este repositorio contiene una aplicación desarrollada en **Streamlit** para la **clasificación y predicción de arritmias cardíacas**, utilizando un modelo previamente entrenado y empaquetado en formato **MLflow**.
+Trazabilidad: Se puede registrar el proceso de entrenamiento en el Servidor de Seguimiento de MLflow.
 
-El despliegue se realiza de manera sencilla y reproducible mediante **Docker**, garantizando que el entorno de ejecución (Python 3.11, TensorFlow, Streamlit, MLflow, etc.) sea idéntico en cualquier equipo, sin importar el sistema operativo.
+El despliegue se realiza de manera sencilla y reproducible mediante Docker, garantizando que el entorno de ejecución (Python 3.11, TensorFlow, MLflow, etc.) sea idéntico en cualquier sistema operativo.
 
-📌 **Estado actual:**  
-El proyecto se encuentra **estable, funcional y desplegable completamente dentro de su contenedor Docker (versión v4).**
+Estado Actual:
+El proyecto está estable, funcional y desplegable completamente dentro de su contenedor Docker (versión v4).
 
----
+🐳 Despliegue Rápido con Docker
+Sigue estos tres sencillos pasos para tener la aplicación corriendo en tu máquina en pocos minutos.
 
-## 🐳 Despliegue rápido con Docker
+🔧 Requisitos Previos
+Asegúrate de tener Docker instalado y en ejecución en tu sistema (Windows, macOS o Linux).
 
-Sigue estos tres pasos para tener la aplicación corriendo en tu máquina en pocos minutos.
+🧱 Paso 1 – Construir la Imagen (Build)
+Desde la carpeta raíz del proyecto (ProyectoArritmiaUAO), donde se encuentra el Dockerfile, ejecuta el siguiente comando:
 
-### 🔧 Requisitos previos
-Asegúrate de tener **Docker** instalado y en ejecución  
-(en **Windows**, **macOS** o **Linux**).
-
----
-
-### 🧱 Paso 1 – Construir la imagen (Build)
-
-Desde la carpeta raíz del proyecto (`ProyectoArritmiaUAO`), donde se encuentra el archivo `Dockerfile`, ejecuta el siguiente comando:
-
-```bash
 docker build -t proyectoarritmias:v4 .
-⏱️ Nota:
-La primera construcción puede tardar varios minutos, ya que instala todas las librerías dentro del contenedor (TensorFlow, MLflow, Streamlit, etc.).
 
-▶️ Paso 2 – Ejecutar el contenedor (Run)
-Inicia el contenedor en modo detached (-d) y mapea el puerto 8501 de Streamlit:
+Nota: La primera construcción puede tardar varios minutos, ya que instala todas las librerías necesarias dentro del contenedor.
 
-bash
-Copiar código
+▶️ Paso 2 – Ejecutar el Contenedor (Run)
+Inicia el contenedor en modo detached (-d), asígnale el nombre arritmia-app y mapea el puerto 8501 de Streamlit:
+
 docker run -d --name arritmia-app -p 8501:8501 proyectoarritmias:v4
-🌐 Paso 3 – Acceder a la aplicación
+
+🌐 Paso 3 – Acceder a la Aplicación
 Abre tu navegador y dirígete a:
 
 👉 http://localhost:8501
 
-La aplicación se cargará lista para recibir un archivo CSV sin encabezados (188 columnas numéricas)
-y generar la predicción en tiempo real.
+La aplicación Streamlit se cargará lista para recibir un archivo CSV (188 columnas numéricas sin encabezados) y generar la predicción.
 
- Modelo en formato MLflow
-El modelo fue convertido desde un archivo Keras (PrediccionArritmia.keras) a formato MLflow, utilizando el script:
+🧹 Limpieza y Mantenimiento de Docker
+Para detener y eliminar el contenedor o liberar recursos después de usar la aplicación:
 
-bash
-Copiar código
-python save_mlflow_model.py
-Esto permite una mejor portabilidad, versionamiento y compatibilidad con herramientas de seguimiento de experimentos.
-
-El modelo final se encuentra dentro de:
-📁 src/modelo_mlflow/
-
-🧹 Limpieza del entorno Docker
-Si necesitas detener o eliminar el contenedor:
-
-bash
-Copiar código
 # Detener el contenedor en ejecución
 docker stop arritmia-app
 
@@ -70,18 +49,16 @@ docker stop arritmia-app
 docker rm arritmia-app
 
 # (Opcional) Eliminar la imagen para liberar espacio
-docker rmi proyectoarritmias:v4
-También puedes realizar una limpieza general del entorno:
-
-bash
-Copiar código
-docker system prune -f
+# docker rmi proyectoarritmias:v4
 
 👨‍💻 Autores
 María Alejandra Niño
+
 Pablo Moreno
+
 Leonardo Collazos
+
 Juan Guillermo Restrepo Morales
 
 Estudiantes de la Especialización en Inteligencia Artificial – Universidad Autónoma de Occidente (UAO)
-📍 Cali, Colombia
+Cali, Colombia

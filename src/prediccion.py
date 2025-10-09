@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from utils import ETIQUETAS
+from .utils import ETIQUETAS
 
 def generar_predicciones(modelo, df):
     """
